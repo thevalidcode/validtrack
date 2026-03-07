@@ -67,13 +67,6 @@ validtrack/
 - **React Native Reanimated** - High-performance animations
 - **React Native SVG** - Custom charts
 
-## 📖 Documentation
-
-For detailed setup, customization, and architecture information, see:
-
-- **[PROJECT_GUIDE.md](PROJECT_GUIDE.md)** - Complete project documentation
-- **[INSTALL.md](INSTALL.md)** - Installation troubleshooting
-
 ## 🎨 Customization
 
 ### Change Brand Color
@@ -93,7 +86,7 @@ export const colors = {
 2. Add category to `dummyData.ts`
 3. Add icon in components
 
-## 📱 Screenshots
+## 📱 App Info
 
 The app includes:
 
@@ -138,12 +131,7 @@ npm start -- --reset-cache
 
 ## 📝 License
 
-This project is for educational purposes. Feel free to use and modify.
-
-## 🤝 Contributing
-
-This is a learning project showcasing React Native best practices. Fork and customize for your needs!
-
+This project is for showing my skills, you can't modify :( 
 ---
 
 **Built with ❤️ using React Native, Expo, and TypeScript**
