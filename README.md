@@ -1,50 +1,149 @@
-# Welcome to your Expo app 👋
+# ValidTrack - Professional Expense Tracking App 💰
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern, production-ready expense tracking application built with React Native and Expo. Features beautiful animations, custom charts, and a professional UI.
 
-## Get started
+![ValidTrack](https://img.shields.io/badge/React%20Native-0.81-blue) ![Expo](https://img.shields.io/badge/Expo-54-purple) ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)
 
-1. Install dependencies
+## ✨ Features
 
-   ```bash
-   npm install
-   ```
+- 📊 **Dashboard**: Balance overview, spending pie chart, recent transactions
+- 💸 **Transactions**: Full list with search and category filtering
+- 📈 **Analytics**: Detailed insights with pie and bar charts
+- ➕ **Add Expenses**: Easy-to-use modal for adding income/expenses
+- 🎨 **Animations**: Smooth Moti animations throughout
+- 🎯 **Professional UI**: Clean, modern design with purple theme
 
-2. Start the app
+## 🚀 Quick Start
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Install Dependencies
 
 ```bash
-npm run reset-project
+npm install
+npm install @tanstack/react-query @react-navigation/stack react-native-svg
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Start the Development Server
 
-## Learn more
+```bash
+npm start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Run on Your Device
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- **iOS**: Press `i` or scan with Camera app
+- **Android**: Press `a` or scan with Expo Go
+- **Web**: Press `w`
 
-## Join the community
+## 📁 Project Structure
 
-Join our community of developers creating universal apps.
+```
+validtrack/
+├── app/              # Expo Router setup
+├── components/       # Reusable UI components
+│   ├── BalanceCard.tsx
+│   ├── TransactionItem.tsx
+│   ├── ChartCard.tsx
+│   ├── FloatingButton.tsx
+│   ├── SimplePieChart.tsx
+│   └── SimpleBarChart.tsx
+├── screens/          # Screen components
+│   ├── DashboardScreen.tsx
+│   ├── TransactionsScreen.tsx
+│   ├── AnalyticsScreen.tsx
+│   └── AddExpenseScreen.tsx
+├── hooks/            # Custom React Query hooks
+├── services/         # API layer & dummy data
+├── theme/            # Colors, spacing, typography
+└── ...
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🛠️ Tech Stack
+
+- **React Native** + **Expo** - Cross-platform mobile framework
+- **TypeScript** - Type safety
+- **React Navigation** - Navigation (Stack & Bottom Tabs)
+- **TanStack Query** - Data fetching & caching
+- **Moti** - Smooth animations
+- **React Native Reanimated** - High-performance animations
+- **React Native SVG** - Custom charts
+
+## 📖 Documentation
+
+For detailed setup, customization, and architecture information, see:
+
+- **[PROJECT_GUIDE.md](PROJECT_GUIDE.md)** - Complete project documentation
+- **[INSTALL.md](INSTALL.md)** - Installation troubleshooting
+
+## 🎨 Customization
+
+### Change Brand Color
+
+Edit `theme/colors.ts`:
+
+```typescript
+export const colors = {
+  primary: "#6A0DAD", // Change this
+  // ...
+};
+```
+
+### Add Categories
+
+1. Update `services/types.ts`
+2. Add category to `dummyData.ts`
+3. Add icon in components
+
+## 📱 Screenshots
+
+The app includes:
+
+- Animated balance card
+- Interactive pie charts
+- Category-based filtering
+- Beautiful transaction list
+- Weekly/monthly bar charts
+
+## 🔄 Backend Integration
+
+Currently uses dummy data. To connect to a real backend:
+
+1. Replace API calls in `services/api.ts`
+2. Add authentication
+3. Implement data persistence
+
+Example:
+
+```typescript
+export const fetchBalance = async () => {
+  const response = await fetch("https://api.yourbackend.com/balance");
+  return response.json();
+};
+```
+
+## 🐛 Troubleshooting
+
+**Module not found errors:**
+
+```bash
+expo start --clear
+```
+
+**Metro bundler issues:**
+
+```bash
+rm -rf node_modules
+npm install
+npm start -- --reset-cache
+```
+
+## 📝 License
+
+This project is for educational purposes. Feel free to use and modify.
+
+## 🤝 Contributing
+
+This is a learning project showcasing React Native best practices. Fork and customize for your needs!
+
+---
+
+**Built with ❤️ using React Native, Expo, and TypeScript**
