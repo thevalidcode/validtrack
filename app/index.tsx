@@ -12,6 +12,7 @@ import {
   TransitionPresets,
 } from "@react-navigation/stack";
 import React from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   AddExpenseScreen,
   AnalyticsScreen,
@@ -33,6 +34,9 @@ const Stack = createStackNavigator();
  * Main navigation with Dashboard, Transactions, and Analytics
  */
 function TabNavigator() {
+  const insets = useSafeAreaInsets();
+  const tabBarBottomPadding = Math.max(insets.bottom, 12);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -46,9 +50,9 @@ function TabNavigator() {
           right: 0,
           borderTopWidth: 0,
           backgroundColor: colors.cardBackground,
-          paddingBottom: 24,
+          paddingBottom: tabBarBottomPadding,
           paddingTop: 12,
-          height: 84,
+          height: 72 + tabBarBottomPadding,
           elevation: 0,
           shadowColor: colors.shadow,
           shadowOffset: { width: 0, height: -4 },

@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { borderRadius, colors, shadows, spacing, typography } from "../theme";
+import { ASSETS, resolveAssetUri } from "../constants/assets";
 import { NotificationModal } from "./NotificationModal";
 
 interface HeaderProps {
@@ -47,7 +48,7 @@ export const Header: React.FC<HeaderProps> = ({
     <View
       style={[
         styles.container,
-        { paddingTop: insets.top + (Platform.OS === "ios" ? 0 : 10) },
+        { paddingTop: insets.top + (Platform.OS === "ios" ? 0 : spacing.sm) },
       ]}
     >
       <NotificationModal
@@ -70,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
             onPress={() => navigation.navigate("Profile")}
           >
             <Image
-              source={{ uri: "https://i.pravatar.cc/150?img=32" }}
+              source={{ uri: resolveAssetUri(ASSETS.avatar) }}
               style={styles.profileImage}
             />
             <View style={styles.onlineBadge} />

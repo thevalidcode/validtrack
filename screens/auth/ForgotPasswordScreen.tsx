@@ -17,10 +17,12 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
     colors,
     shadows,
-    spacing
+    spacing,
+    typography,
 } from "../../theme";
 
 interface ForgotPasswordScreenProps {
@@ -30,6 +32,7 @@ interface ForgotPasswordScreenProps {
 export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
   navigation,
 }) => {
+  const insets = useSafeAreaInsets();
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -39,7 +42,7 @@ export const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({
         from={{ opacity: 0, scale: 0.9, translateY: -20 }}
         animate={{ opacity: 1, scale: 1, translateY: 0 }}
         transition={{ type: "spring", damping: 20 }}
-        style={styles.header}
+        style={[styles.header, { paddingTop: insets.top + spacing.lg }]}
       >
         <TouchableOpacity
           style={styles.backButton}
@@ -141,7 +144,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
-    paddingTop: 60,
     paddingHorizontal: spacing.xl,
     paddingBottom: spacing.xl,
   },
@@ -157,14 +159,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
     color: colors.text,
     letterSpacing: -1,
   },
   subtitle: {
     fontSize: 16,
     color: colors.textLight,
-    fontWeight: "500",
+    fontFamily: typography.fontFamily.medium,
     marginTop: 4,
   },
   content: {
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: "700",
+    fontFamily: typography.fontFamily.bold,
     color: colors.text,
     marginBottom: spacing.sm,
     marginLeft: 4,
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: colors.text,
-    fontWeight: "500",
+    fontFamily: typography.fontFamily.medium,
   },
   submitButtonContainer: {
     marginTop: spacing.xl,
@@ -219,7 +221,7 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
   },
   successView: {
     alignItems: "center",
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
   },
   successTitle: {
     fontSize: 24,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
     color: colors.text,
     marginBottom: spacing.sm,
   },
@@ -239,7 +241,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.textLight,
     textAlign: "center",
-    fontWeight: "500",
+    fontFamily: typography.fontFamily.medium,
     paddingHorizontal: spacing.xl,
     lineHeight: 24,
   },
@@ -253,7 +255,7 @@ const styles = StyleSheet.create({
   },
   backToLoginText: {
     color: colors.primary,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
     fontSize: 16,
   },
 });

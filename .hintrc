@@ -4,5 +4,13 @@
   ],
   "hints": {
     "typescript-config/is-valid": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["app/+html.tsx"],
+      "hints": {
+        "apple-touch-icons": "off"
+      }
+    }
+  ]
 }

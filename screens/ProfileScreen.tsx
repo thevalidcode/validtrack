@@ -16,9 +16,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ASSETS, resolveAssetUri } from "../constants/assets";
 import { colors, shadows, spacing, typography } from "../theme";
 
 export const ProfileScreen = ({ navigation }: any) => {
+  const insets = useSafeAreaInsets();
   const menuItems = [
     {
       icon: "account-edit-outline",
@@ -35,7 +38,7 @@ export const ProfileScreen = ({ navigation }: any) => {
     <View style={styles.container}>
       <LinearGradient
         colors={[colors.primary, colors.primaryGradientEnd]}
-        style={styles.header}
+        style={[styles.header, { paddingTop: insets.top + spacing.lg }]}
       >
         <TouchableOpacity
           style={styles.backButton}
@@ -58,7 +61,7 @@ export const ProfileScreen = ({ navigation }: any) => {
         >
           <View style={styles.avatarWrapper}>
             <Image
-              source={{ uri: "https://i.pravatar.cc/150?img=32" }}
+              source={{ uri: resolveAssetUri(ASSETS.avatar) }}
               style={styles.avatar}
             />
             <TouchableOpacity style={styles.editAvatar}>
@@ -129,7 +132,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
-    paddingTop: 60,
     paddingBottom: 40,
     paddingHorizontal: spacing.xl,
     flexDirection: "row",
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
     marginRight: 40,
     color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
   },
   content: {
     flex: 1,

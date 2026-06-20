@@ -20,7 +20,8 @@ import {
 import {
     colors,
     shadows,
-    spacing
+    spacing,
+    typography,
 } from "../../theme";
 
 interface LoginScreenProps {
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
     color: colors.text,
     textAlign: "center",
     marginBottom: spacing.xs,
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.textLight,
     textAlign: "center",
-    fontWeight: "500",
+    fontFamily: typography.fontFamily.medium,
   },
   formContainer: {
     width: "100%",
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: "700",
+    fontFamily: typography.fontFamily.bold,
     color: colors.text,
     marginBottom: spacing.sm,
     marginLeft: 4,
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: colors.text,
-    fontWeight: "500",
+    fontFamily: typography.fontFamily.medium,
   },
   forgotPassword: {
     alignSelf: "flex-end",
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     color: colors.primary,
-    fontWeight: "700",
+    fontFamily: typography.fontFamily.bold,
     fontSize: 14,
   },
   loginButton: {
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
   loginButtonText: {
     color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
   },
   footer: {
     flexDirection: "row",
@@ -259,11 +260,11 @@ const styles = StyleSheet.create({
   footerText: {
     color: colors.textLight,
     fontSize: 15,
-    fontWeight: "500",
+    fontFamily: typography.fontFamily.medium,
   },
   signupText: {
     color: colors.primary,
     fontSize: 15,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
   },
 });

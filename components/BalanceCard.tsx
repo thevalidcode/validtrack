@@ -11,7 +11,7 @@ import { MotiView } from "moti";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Balance } from "../services/types";
-import { colors, shadows, spacing } from "../theme";
+import { colors, shadows, spacing, typography } from "../theme";
 
 interface BalanceCardProps {
   balance: Balance;
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     color: "rgba(255, 255, 255, 0.8)",
-    fontWeight: "600",
+    fontFamily: typography.fontFamily.semibold,
     letterSpacing: 0.5,
   },
   glassChip: {
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   chipText: {
     fontSize: 10,
     color: "#FFFFFF",
-    fontWeight: "700",
+    fontFamily: typography.fontFamily.bold,
     marginLeft: 4,
     textTransform: "uppercase",
   },
@@ -178,13 +178,13 @@ const styles = StyleSheet.create({
   currencySymbol: {
     fontSize: 24,
     color: "#FFFFFF",
-    fontWeight: "600",
+    fontFamily: typography.fontFamily.semibold,
     marginRight: 4,
     opacity: 0.9,
   },
   amount: {
     fontSize: 38,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
     color: "#FFFFFF",
     letterSpacing: -1,
   },
@@ -207,13 +207,13 @@ const styles = StyleSheet.create({
   statMiniLabel: {
     fontSize: 11,
     color: "rgba(255, 255, 255, 0.7)",
-    fontWeight: "500",
+    fontFamily: typography.fontFamily.medium,
     marginBottom: 2,
   },
   statMiniAmount: {
     fontSize: 15,
     color: "#FFFFFF",
-    fontWeight: "700",
+    fontFamily: typography.fontFamily.bold,
   },
   statDivider: {
     width: 1,
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
   },
   trendText: {
     fontSize: 10,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
     marginLeft: 2,
   },
 });

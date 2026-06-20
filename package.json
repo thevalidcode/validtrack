@@ -6,8 +6,12 @@
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
+    "build": "expo build:web",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "copy:pwa-assets": "node ./scripts/copy-pwa-assets.js",
+    "build:web": "npm run copy:pwa-assets && expo export --platform web",
+    "build": "npm run build:web",
     "lint": "expo lint"
   },
   "dependencies": {
