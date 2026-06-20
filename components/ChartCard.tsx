@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: typography.fontSize.xl,
-    fontWeight: typography.fontWeight.bold,
+    fontFamily: typography.fontFamily.bold,
     color: colors.text,
     marginBottom: spacing.xxs,
     letterSpacing: -0.5,
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: typography.fontSize.sm,
     color: colors.textLight,
-    fontWeight: typography.fontWeight.medium,
+    fontFamily: typography.fontFamily.medium,
   },
   content: {
     alignItems: "center",

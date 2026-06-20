@@ -1,4 +1,5 @@
 {
+  "id": "/",
   "name": "ValidTrack",
   "short_name": "ValidTrack",
   "start_url": "/",
@@ -25,6 +26,22 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "ValidTrack mobile dashboard"
+    },
+    {
+      "src": "/screenshots/wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ValidTrack desktop view"
     }
   ]
 }

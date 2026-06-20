@@ -1,4 +1,4 @@
-const CACHE_VERSION = "validtrack-1.0.0-2";
+const CACHE_VERSION = "validtrack-1.0.0-4";
 const CACHE_NAME = `validtrack-static-${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
@@ -12,6 +12,8 @@ const PRECACHE_URLS = [
   "/icon-512.png",
   "/apple-touch-icon.png",
   "/avatar.png",
+  "/screenshots/mobile.png",
+  "/screenshots/wide.png",
   "/fonts/MaterialCommunityIcons.ttf",
   "/fonts/PlusJakartaSans_400Regular.ttf",
   "/fonts/PlusJakartaSans_500Medium.ttf",
@@ -22,7 +24,17 @@ const PRECACHE_URLS = [
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
+    caches.open(CACHE_NAME).then(async (cache) => {
+      await Promise.allSettled(
+        PRECACHE_URLS.map(async (url) => {
+          try {
+            await cache.add(url);
+          } catch (error) {
+            console.warn("Precache skipped:", url, error);
+          }
+        })
+      );
+    })
   );
   self.skipWaiting();
 });

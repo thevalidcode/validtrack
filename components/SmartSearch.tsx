@@ -15,7 +15,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors, shadows, spacing } from "../theme";
+import { colors, shadows, spacing, typography } from "../theme";
 
 export const SmartSearch = () => {
   const [isFocused, setIsFocused] = useState(false);
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 15,
-    fontWeight: "600",
+    fontFamily: typography.fontFamily.semibold,
     color: colors.text,
     marginLeft: spacing.sm,
   },
@@ -126,13 +126,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 12,
-    fontWeight: "800",
+    fontFamily: typography.fontFamily.extraBold,
     color: colors.textLight,
     textTransform: "uppercase",
   },
   clearAll: {
     fontSize: 12,
-    fontWeight: "700",
+    fontFamily: typography.fontFamily.bold,
     color: colors.primary,
   },
   recentsList: {
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   recentText: {
     fontSize: 13,
-    fontWeight: "700",
+    fontFamily: typography.fontFamily.bold,
     color: colors.text,
   },
 });

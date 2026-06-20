@@ -55,6 +55,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.lg,
     fontSize: typography.fontSize.base,
     color: colors.textLight,
-    fontWeight: typography.fontWeight.medium,
+    fontFamily: typography.fontFamily.medium,
   },
 });

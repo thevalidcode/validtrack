@@ -30,7 +30,19 @@ fs.mkdirSync(fontsDest, { recursive: true });
 for (const [name, relPath] of fonts) {
   const source = path.join(fontsSrc, relPath);
   const destination = path.join(fontsDest, `PlusJakartaSans_${name}.ttf`);
-  fs.copyFileSync(source, destination);
+
+  try {
+    fs.copyFileSync(source, destination);
+  } catch (error) {
+    if (error.code === "EACCES") {
+      console.warn(
+        `Skipping ${path.basename(destination)} (permission denied). Run: sudo chown -R $(whoami) public/`
+      );
+      continue;
+    }
+
+    throw error;
+  }
 }
 
 const iconFontSrc = path.join(
@@ -38,14 +50,23 @@ const iconFontSrc = path.join(
   "node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"
 );
 const iconFontDest = path.join(fontsDest, "MaterialCommunityIcons.ttf");
-fs.copyFileSync(iconFontSrc, iconFontDest);
+
+try {
+  fs.copyFileSync(iconFontSrc, iconFontDest);
+} catch (error) {
+  if (error.code !== "EACCES") {
+    throw error;
+  }
+  console.warn(
+    "Skipping MaterialCommunityIcons.ttf (permission denied). Run: sudo chown -R $(whoami) public/"
+  );
+}
 
 const resizedIcons = [
   ["icon-192.png", 192],
   ["icon-512.png", 512],
   ["apple-touch-icon.png", 180],
   ["avatar.png", 150],
-  ["icon.png", 512],
 ];
 
 for (const [fileName, size] of resizedIcons) {
@@ -54,6 +75,30 @@ for (const [fileName, size] of resizedIcons) {
     { stdio: "inherit" }
   );
 }
+
+// Keep icon.png at 512px for general use (never reference it as 192/512 in manifest).
+execSync(
+  `sips -z 512 512 "${iconSrc}" --out "${path.join(publicDir, "icon.png")}"`,
+  { stdio: "inherit" }
+);
+
+const screenshotsDir = path.join(publicDir, "screenshots");
+fs.mkdirSync(screenshotsDir, { recursive: true });
+
+const screenshotBase = path.join(publicDir, "screenshot-base.png");
+execSync(`sips -z 512 512 "${iconSrc}" --out "${screenshotBase}"`, {
+  stdio: "inherit",
+});
+
+execSync(
+  `sips --padToHeightWidth 844 390 "${screenshotBase}" --out "${path.join(screenshotsDir, "mobile.png")}"`,
+  { stdio: "inherit" }
+);
+execSync(
+  `sips --padToHeightWidth 720 1280 "${screenshotBase}" --out "${path.join(screenshotsDir, "wide.png")}"`,
+  { stdio: "inherit" }
+);
+fs.unlinkSync(screenshotBase);
 
 if (fs.existsSync(faviconSrc)) {
   fs.copyFileSync(faviconSrc, path.join(publicDir, "favicon.png"));

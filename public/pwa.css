@@ -61,8 +61,16 @@ body,
 
 body {
   margin: 0;
+  font-family: "PlusJakartaSans_400Regular", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
 }
 
 #root {

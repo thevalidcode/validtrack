@@ -11,6 +11,7 @@ import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
+import { usePathname } from "expo-router";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
@@ -24,21 +25,23 @@ import {
   SignupScreen,
   TransactionsScreen,
 } from "../screens";
+import { parseWebPath, TabScreenName } from "../navigation/parseWebPath";
 import { colors, typography } from "../theme";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-/**
- * Bottom Tab Navigator - Modern 2026 Design
- * Main navigation with Dashboard, Transactions, and Analytics
- */
-function TabNavigator() {
+interface TabNavigatorProps {
+  initialRouteName?: TabScreenName;
+}
+
+function TabNavigator({ initialRouteName = "Dashboard" }: TabNavigatorProps) {
   const insets = useSafeAreaInsets();
   const tabBarBottomPadding = Math.max(insets.bottom, 12);
 
   return (
     <Tab.Navigator
+      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
@@ -130,9 +133,12 @@ function TabNavigator() {
  * Wraps tabs with modal screens like AddExpense
  */
 export default function Index() {
+  const pathname = usePathname();
+  const { stack, tab } = parseWebPath(pathname);
+
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName={stack}
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
@@ -143,7 +149,9 @@ export default function Index() {
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="Tabs" component={TabNavigator} />
+      <Stack.Screen name="Tabs">
+        {() => <TabNavigator initialRouteName={tab ?? "Dashboard"} />}
+      </Stack.Screen>
       <Stack.Screen
         name="AddExpense"
         component={AddExpenseScreen}
