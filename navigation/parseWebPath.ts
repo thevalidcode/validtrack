@@ -27,17 +27,27 @@ export function parseWebPath(pathname: string): {
     return { stack: "Login" };
   }
 
-  if (segments[0] === "Tabs") {
-    const tabName = segments[1];
-    const tab = TAB_SCREENS.includes(tabName as TabScreenName)
-      ? (tabName as TabScreenName)
-      : "Dashboard";
+  const tabsIndex = segments.indexOf("Tabs");
+
+  if (tabsIndex !== -1) {
+    let tab: TabScreenName = "Dashboard";
+
+    for (let i = 0; i < segments.length - 1; i += 1) {
+      if (
+        segments[i] === "Tabs" &&
+        TAB_SCREENS.includes(segments[i + 1] as TabScreenName)
+      ) {
+        tab = segments[i + 1] as TabScreenName;
+      }
+    }
 
     return { stack: "Tabs", tab };
   }
 
-  if (STACK_SCREENS.includes(segments[0] as StackScreenName)) {
-    return { stack: segments[0] as StackScreenName };
+  const first = segments[0];
+
+  if (STACK_SCREENS.includes(first as StackScreenName)) {
+    return { stack: first as StackScreenName };
   }
 
   return { stack: "Login" };

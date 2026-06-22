@@ -1,19 +1,32 @@
 /**
  * Main Navigation
  *
- * Sets up bottom tab navigation with Dashboard, Transactions, and Analytics screens.
- * Uses React Navigation for navigation management.
+ * React Navigation stack + tabs. On web, URL is synced via expo-router replace()
+ * so paths stay absolute (e.g. /Tabs/Settings) instead of appending segments.
  */
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
+  NavigationContainer,
+  NavigationContainerRef,
+  NavigationIndependentTree,
+  NavigationState,
+  PartialState,
+} from "@react-navigation/native";
+import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
-import { usePathname } from "expo-router";
-import React from "react";
+import { usePathname, useRouter } from "expo-router";
+import React, { useMemo, useRef } from "react";
+import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  getWebPathFromState,
+  getWebStateFromPath,
+} from "../navigation/linking";
+import { parseWebPath } from "../navigation/parseWebPath";
 import {
   AddExpenseScreen,
   AnalyticsScreen,
@@ -25,23 +38,17 @@ import {
   SignupScreen,
   TransactionsScreen,
 } from "../screens";
-import { parseWebPath, TabScreenName } from "../navigation/parseWebPath";
 import { colors, typography } from "../theme";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-interface TabNavigatorProps {
-  initialRouteName?: TabScreenName;
-}
-
-function TabNavigator({ initialRouteName = "Dashboard" }: TabNavigatorProps) {
+function TabNavigator() {
   const insets = useSafeAreaInsets();
   const tabBarBottomPadding = Math.max(insets.bottom, 12);
 
   return (
     <Tab.Navigator
-      initialRouteName={initialRouteName}
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
@@ -128,17 +135,9 @@ function TabNavigator({ initialRouteName = "Dashboard" }: TabNavigatorProps) {
   );
 }
 
-/**
- * Main Stack Navigator
- * Wraps tabs with modal screens like AddExpense
- */
-export default function Index() {
-  const pathname = usePathname();
-  const { stack, tab } = parseWebPath(pathname);
-
+function AppStack() {
   return (
     <Stack.Navigator
-      initialRouteName={stack}
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
@@ -149,9 +148,7 @@ export default function Index() {
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="Tabs">
-        {() => <TabNavigator initialRouteName={tab ?? "Dashboard"} />}
-      </Stack.Screen>
+      <Stack.Screen name="Tabs" component={TabNavigator} />
       <Stack.Screen
         name="AddExpense"
         component={AddExpenseScreen}
@@ -162,4 +159,65 @@ export default function Index() {
       />
     </Stack.Navigator>
   );
+}
+
+export default function Index() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const navigationRef = useRef<NavigationContainerRef<Record<string, unknown>>>(
+    null
+  );
+  const isSyncingUrl = useRef(false);
+
+  const initialNavigationState = useMemo(() => {
+    if (Platform.OS !== "web") {
+      return undefined;
+    }
+
+    return (
+      getWebStateFromPath(pathname) ??
+      getWebStateFromPath(
+        (() => {
+          const { stack, tab } = parseWebPath(pathname);
+          return tab ? `/Tabs/${tab}` : `/${stack}`;
+        })()
+      )
+    );
+  }, []);
+
+  const syncWebUrl = (
+    state: NavigationState | PartialState<NavigationState> | undefined
+  ) => {
+    if (Platform.OS !== "web" || !state || isSyncingUrl.current) {
+      return;
+    }
+
+    const nextPath = getWebPathFromState(state);
+
+    if (!nextPath || window.location.pathname === nextPath) {
+      return;
+    }
+
+    isSyncingUrl.current = true;
+    router.replace(nextPath as never);
+    isSyncingUrl.current = false;
+  };
+
+  if (Platform.OS === "web") {
+    return (
+      <NavigationIndependentTree>
+        <NavigationContainer
+          ref={navigationRef}
+          initialState={initialNavigationState}
+          linking={{ enabled: false, prefixes: [] }}
+          documentTitle={{ enabled: false }}
+          onStateChange={(state) => syncWebUrl(state)}
+        >
+          <AppStack />
+        </NavigationContainer>
+      </NavigationIndependentTree>
+    );
+  }
+
+  return <AppStack />;
 }
